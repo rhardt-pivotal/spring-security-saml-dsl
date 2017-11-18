@@ -13,8 +13,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	@Value("${security.saml2.metadata-url}")
-	String metadataUrl;
+	//@Value("${security.saml2.metadata-url}")
+	//String metadataUrl;
+	@Value("${app.hostname}")
+	String appHostname;
+
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -32,11 +35,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 						.keyPassword("secret")
 						.and()
 					.protocol("https")
-					.hostname("localhost:8443")
+					.hostname(appHostname	)
 					.basePath("/")
 					.and()
 				.identityProvider()
-					.metadataFilePath(metadataUrl)
+					.metadataFilePath("saml/metadata.xml")
 					.and();
 	}
 }

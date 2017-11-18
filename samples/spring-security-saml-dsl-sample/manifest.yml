@@ -1,0 +1,4 @@
+---
+applications:
+- name: robtest2
+  path: ./build/libs/samples/spring-security-saml-dsl-sample-1.0.0.BUILD-SNAPSHOT.jar
