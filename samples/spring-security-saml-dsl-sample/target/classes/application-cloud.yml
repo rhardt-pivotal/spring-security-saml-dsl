@@ -1,0 +1,4 @@
+app:
+  hostname: ${vcap.application.application_uris[0]}
+  storefilepath: saml/keystore.jks
+
