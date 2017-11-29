@@ -123,6 +123,9 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
 			.addFilterBefore(metadataGeneratorFilter(samlEntryPoint, extendedMetadata), ChannelProcessingFilter.class)
 			.addFilterAfter(samlFilter(samlEntryPoint, contextProvider), BasicAuthenticationFilter.class)
 			.authenticationProvider(samlAuthenticationProvider);
+
+		    http.addFilterAfter(metadataDisplayFilter(contextProvider, serviceProvider.keyManager, cachingMetadataManager), MetadataGeneratorFilter.class);
+
 	}
 
 	public static SAMLConfigurer saml() {
@@ -253,6 +256,16 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
 		MetadataGeneratorFilter metadataGeneratorFilter = new MetadataGeneratorFilter(getMetadataGenerator(samlEntryPoint, extendedMetadata));
 		metadataGeneratorFilter.setManager(cachingMetadataManager);
 		return metadataGeneratorFilter;
+	}
+
+	private MetadataDisplayFilter metadataDisplayFilter(SAMLContextProvider samlContextProvider,
+														KeyManager keyManager,
+														MetadataManager metadataManager) {
+		MetadataDisplayFilter metadataDisplayFilter = new MetadataDisplayFilter();
+		metadataDisplayFilter.setContextProvider(samlContextProvider);
+		metadataDisplayFilter.setKeyManager(keyManager);
+		metadataDisplayFilter.setManager(metadataManager);
+		return metadataDisplayFilter;
 	}
 
 	private FilterChainProxy samlFilter(SAMLEntryPoint samlEntryPoint, SAMLContextProvider contextProvider) {
