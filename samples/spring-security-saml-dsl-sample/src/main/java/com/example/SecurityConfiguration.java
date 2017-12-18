@@ -1,6 +1,6 @@
 package com.example;
 
-import static org.springframework.security.extensions.saml2.config.SAMLConfigurer.saml;
+import static com.example.SAMLConfigurer.saml;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -9,8 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.saml.metadata.MetadataGenerator;
-import org.springframework.security.saml.metadata.MetadataGeneratorFilter;
+import org.springframework.security.saml.SAMLBootstrap;
 
 @EnableWebSecurity
 @Configuration
@@ -45,8 +44,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					.metadataFilePath("saml/metadata.xml")
 					.and()
 				.init(http);
-	}
 
+	}
 
 
 }
